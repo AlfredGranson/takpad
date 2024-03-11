@@ -9,11 +9,15 @@ const client = new ApiClient({
 })
 
 function Pages() {
-  const { data, meta, error, isLoading, isFetching } = useQuery('pages')
+  const { data, meta, error, isLoading, isFetching } = useQuery(['folders', {
+    filter: {
+      folder_id: "null"
+    }
+  }])
 
   if(data){
     return (
-        data.map(page => <li>{page.title}</li>)
+        data.map(folder => <li key={folder.id}>{folder.name}</li>)
     )
   }
 }
