@@ -1,7 +1,8 @@
-import { ApiClient, ApiProvider } from 'jsonapi-react'
+import './App.css';
 import schema from './schema'
 import { useQuery } from 'jsonapi-react'
-import './App.css';
+import { ApiClient, ApiProvider } from 'jsonapi-react'
+import { Routes, Route, useParams } from 'react-router-dom';
 
 const client = new ApiClient({
   url: 'http://localhost:3000/api/v1',
@@ -9,6 +10,8 @@ const client = new ApiClient({
 })
 
 function Pages() {
+  const { id } = useParams()
+
   const { data, meta, error, isLoading, isFetching } = useQuery(['folders', {
     filter: {
       folder_id: "null"
@@ -17,7 +20,7 @@ function Pages() {
 
   if(data){
     return (
-        data.map(folder => <li key={folder.id}>{folder.name}</li>)
+        data.map(folder => <li key={folder.id}><a href={"folder/"+folder.id}>{folder.name}</a></li>)
     )
   }
 }
